@@ -1,6 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, Button, TextInput, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
-import { clockRunning } from 'react-native-reanimated';
+import {
+  View,
+  Text,
+  Button,
+  TextInput,
+  StyleSheet,
+  ImageBackground,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+} from 'react-native';
 
 export function Start(props) {
   const [name, setName] = useState('');
@@ -91,23 +99,21 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '88%',
     height: '44%',
-    backgroundColor: 'white',
-    flexDirection: 'column',
+    backgroundColor: '#FFFFFF',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    marginBottom: '1.5rem',
+    marginBottom: 15,
   },
   yourNameContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
     width: '88%',
-    height: '3rem',
+    height: 50,
     borderColor: '#757083',
     borderWidth: 2,
     borderRadius: 3,
   },
   yourName: {
-    paddingLeft: '0.5rem',
+    paddingLeft: 15,
     fontSize: 16,
     height: '100%',
     width: '100%',
