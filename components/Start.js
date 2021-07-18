@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  Button,
-  TextInput,
-  StyleSheet,
-  ImageBackground,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-} from 'react-native';
+import { View, Text, TextInput, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
 
 export function Start(props) {
   const [name, setName] = useState('');
   const [themeColor, setThemeColor] = useState('#090C08');
+  const [textColor, setTextColor] = useState('#090C08');
+  const [accentColor, setAccentColor] = useState('#020FC8F');
+  const [accentColor2, setAccentColor2] = useState('#020FC8F');
+  const [systemTextColor, setSystemTextColor] = useState('#FFD100');
+  const [rightBubble, setRightBubble] = useState('#F7AEF8');
+  const [leftBubble, setLeftBubble] = useState('#F2A900');
+
   const image = require('../assets/Background-Image.png');
 
   return (
@@ -22,6 +20,9 @@ export function Start(props) {
         <View style={styles.startChattingContainer}>
           <View style={styles.yourNameContainer}>
             <TextInput
+              accessible={true}
+              accessibilityLabel="User name input"
+              accessibilityHint="Type your name here"
               style={styles.yourName}
               onChangeText={(name) => {
                 setName(name);
@@ -36,28 +37,62 @@ export function Start(props) {
               accessible={true}
               accessibilityLabel="Theme color"
               accessibilityHint="Let’s you choose to change the theme color of chat message"
-              onPress={() => setThemeColor('#090C08')}
+              onPress={() => {
+                setThemeColor('#c1fba4'),
+                  setTextColor('#ff206e'),
+                  setAccentColor('#e4c1f9'),
+                  setAccentColor2('#ffef9f'),
+                  setSystemTextColor('#432371'),
+                  setRightBubble('#90f1ef'),
+                  setLeftBubble('#ffd6e0');
+              }}
               style={styles.color1}
             ></TouchableOpacity>
             <TouchableOpacity
               accessible={true}
               accessibilityLabel="Theme color"
               accessibilityHint="Let’s you choose to change the theme color of chat message"
-              onPress={() => setThemeColor('#474056')}
+              onPress={() => {
+                setThemeColor('#eec4dd'),
+                  setTextColor('#a32265'),
+                  setAccentColor('#a32265'),
+                  setAccentColor2('#fcd6f9'),
+                  setSystemTextColor('#e0fbfc'),
+                  setRightBubble('#f4e6f1'),
+                  setLeftBubble('#f4e6f1');
+              }}
+              // onPress={() => setThemeColor('#474056')}
               style={styles.color2}
             ></TouchableOpacity>
             <TouchableOpacity
               accessible={true}
               accessibilityLabel="Theme color"
               accessibilityHint="Let’s you choose to change the theme color of chat message"
-              onPress={() => setThemeColor('#8A95A5')}
+              // onPress={() => setThemeColor('#8A95A5')}
+              onPress={() => {
+                setThemeColor('#fabb6b'),
+                  setTextColor('#fffffa'),
+                  setAccentColor('#fedc97'),
+                  setAccentColor2('#faf1a1'),
+                  setSystemTextColor('#e64c8f'),
+                  setRightBubble('#ffc43d'),
+                  setLeftBubble('#f8af86');
+              }}
               style={styles.color3}
             ></TouchableOpacity>
             <TouchableOpacity
               accessible={true}
               accessibilityLabel="Theme color"
               accessibilityHint="Let’s you choose to change the theme color of chat message"
-              onPress={() => setThemeColor('#B9C6AE')}
+              onPress={() => {
+                setThemeColor('#a4c3b2'), //dark
+                  setTextColor('#6b9080'), //dark
+                  setAccentColor('#bee3db'), //any
+                  setAccentColor2('#f6fff8'), //light
+                  setSystemTextColor('#6b9080'), //very light or dark
+                  setRightBubble('#eaf4f4'), //middle
+                  setLeftBubble('#cce3de'); //middle
+              }}
               style={styles.color4}
             ></TouchableOpacity>
           </View>
@@ -66,7 +101,18 @@ export function Start(props) {
             accessibilityLabel="Start Chatting"
             accessibilityHint="Let you start chatting"
             style={styles.chatStartButton}
-            onPress={() => props.navigation.navigate('Chat', { name: name, color: themeColor })}
+            onPress={() =>
+              props.navigation.navigate('Chat', {
+                name: name,
+                themeColor: themeColor,
+                textColor: textColor,
+                accentColor: accentColor,
+                accentColor2: accentColor2,
+                systemTextColor: systemTextColor,
+                rightBubble: rightBubble,
+                leftBubble: leftBubble,
+              })
+            }
           >
             <Text style={styles.chatStartButtonText}>Start Chatting</Text>
           </TouchableOpacity>
@@ -143,19 +189,19 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 50,
-    backgroundColor: '#474056',
+    backgroundColor: '#eec4dd',
   },
   color3: {
     width: 50,
     height: 50,
     borderRadius: 50,
-    backgroundColor: '#8A95A5',
+    backgroundColor: '#fabb6b',
   },
   color4: {
     width: 50,
     height: 50,
     borderRadius: 50,
-    backgroundColor: '#B9C6AE',
+    backgroundColor: '#a4c3b2',
   },
   chatStartButton: {
     marginTop: 10,
@@ -165,6 +211,7 @@ const styles = StyleSheet.create({
   },
   chatStartButtonText: {
     fontSize: 16,
+    // fontSize: '2rem',
     fontWeight: '600',
     textAlign: 'center',
     color: '#FFFFFF',
