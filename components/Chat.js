@@ -1,10 +1,12 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { View, Text, StyleSheet, Platform, KeyboardAvoidingView, Image, Button } from 'react-native';
-import { GiftedChat, InputToolbar, Day, Bubble, SystemMessage, Actions, Composer, Send } from 'react-native-gifted-chat';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NetInfo from '@react-native-community/netinfo';
-import { LogBox } from 'react-native';
-LogBox.ignoreLogs(['Setting a timer']);
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Button, KeyboardAvoidingView, LogBox, Platform, StyleSheet, Text, View } from 'react-native';
+import { Bubble, Composer, Day, GiftedChat, InputToolbar, Send, SystemMessage } from 'react-native-gifted-chat';
+import MapView from 'react-native-maps';
+import { CustomActions } from './CustomActions';
+
+LogBox.ignoreLogs(['Setting a timer', 'Animated.event now requires a second argument for options']);
 
 const firebase = require('firebase');
 require('firebase/firestore');
@@ -42,13 +44,6 @@ export function Chat(props) {
 	let systemTextColor = props.route.params.systemTextColor;
 	let leftBubble = props.route.params.leftBubble;
 	let rightBubble = props.route.params.rightBubble;
-	props.navigation.setOptions({
-		title: name,
-		headerStyle: {
-			backgroundColor: accentColor2,
-		},
-		headerTintColor: textColor,
-	});
 
 	// referenceMessageUser = null;
 
@@ -62,7 +57,13 @@ export function Chat(props) {
 				_id: data._id,
 				text: data.text,
 				createdAt: data.createdAt.toDate(),
-				user: data.user,
+				user: {
+					_id: data.user._id,
+					name: data.user.name,
+					avatar: data.user.avatar,
+				},
+				image: data.image || null,
+				location: data.location || null,
 			});
 		});
 		//all the data from the snapshot of the database is stored in the state
@@ -81,6 +82,8 @@ export function Chat(props) {
 					name: m.user.name,
 					avatar: m.user.avatar,
 				},
+				image: m.image ? m.image : null,
+				location: m.location ? m.location : null,
 			});
 		} catch (err) {
 			console.log(err);
@@ -155,16 +158,26 @@ export function Chat(props) {
 				getMessages();
 			}
 		});
+		//return a function that will be run on cleanup
+		isMounted.current = false;
 	}, []); // checks for changes in the values in this array
 
 	//updates the asyncStorage messages when new messages are added
 	useEffect(() => {
+		props.navigation.setOptions({
+			title: name,
+			headerStyle: {
+				backgroundColor: accentColor2,
+			},
+			headerTintColor: textColor,
+		});
+
 		if (isMounted.current) {
 			console.log('Saving messages');
 			saveMessages();
 		}
-
-		isMounted.current = true;
+		//return a function that will be run on cleanup.
+		isMounted.current = false;
 	}, [messages]);
 
 	const renderBubble = (props) => (
@@ -226,42 +239,9 @@ export function Chat(props) {
 				borderWidth: 1,
 				borderRadius: 20,
 				borderColor: theme,
-				paddingTop: 8.5,
 				paddingHorizontal: 12,
 				marginLeft: 0,
 			}}
-		/>
-	);
-
-	const renderActions = (props) => (
-		<Actions
-			{...props}
-			containerStyle={{
-				width: 44,
-				height: 44,
-				alignItems: 'center',
-				justifyContent: 'center',
-				marginLeft: 4,
-				marginRight: 4,
-				marginBottom: 0,
-			}}
-			icon={() => (
-				<Image
-					style={{ width: 32, height: 32, borderRadius: 10 }}
-					source={{
-						uri: 'https://placeimg.com/32/32/any',
-					}}
-				/>
-			)}
-			options={{
-				'Choose From Library': () => {
-					console.log('Choose From Library');
-				},
-				Cancel: () => {
-					console.log('Cancel');
-				},
-			}}
-			optionTintColor="#222B45"
 		/>
 	);
 
@@ -286,6 +266,25 @@ export function Chat(props) {
 
 	const renderDay = (props) => <Day {...props} textStyle={{ color: systemTextColor }} />;
 
+	const renderCustomActions = (props) => <CustomActions {...props} />;
+
+	const renderCustomView = (props) => {
+		const { currentMessage } = props;
+		if (currentMessage.location) {
+			return (
+				<MapView
+					style={{ width: 150, height: 100, borderRadius: 13, margin: 3 }}
+					region={{
+						latitude: currentMessage.location.latitude,
+						longitude: currentMessage.location.longitude,
+						latitudeDelta: 0.0922,
+						longitudeDelta: 0.0421,
+					}}
+				/>
+			);
+		}
+		return null;
+	};
 	// Use Callback hook prevent this method from be recreated every render.
 	const onSend = useCallback((newMessages = []) => {
 		setMessages((prevMessages) => GiftedChat.append(prevMessages, newMessages));
@@ -304,7 +303,7 @@ export function Chat(props) {
 
 	return (
 		<View style={styles.container}>
-			<Button onPress={deleteMessages} title="Delete all test messages" color="#FF0000" accessibilityLabel="Learn more about this purple button" />
+			{messages.length < 1 ? null : <Button onPress={deleteMessages} title="Delete all test messages" color="#DB7093" accessibilityLabel="Learn more about this purple button" />}
 			<GiftedChat
 				renderDay={renderDay}
 				messages={messages}
@@ -318,9 +317,10 @@ export function Chat(props) {
 				}}
 				renderBubble={renderBubble} //renderBubble prop, looked up props in documentation
 				renderSystemMessage={renderSystemMessage}
+				renderActions={renderCustomActions}
 				renderInputToolbar={renderInputToolbar}
 				renderComposer={renderComposer}
-				renderActions={renderActions}
+				renderCustomView={renderCustomView}
 				renderSend={renderSend}
 			/>
 			{Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null}
