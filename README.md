@@ -42,52 +42,47 @@ Along with that, each message follows a format that’s accepted by **Gifted Cha
 
 Expo’s **[Permission API](https://docs.expo.dev/versions/v38.0.0/sdk/permissions/)**, **[ImagePicker API](https://docs.expo.dev/versions/latest/sdk/imagepicker/)**, and **[Location API](https://docs.expo.dev/versions/latest/sdk/location/)** are used to to ask the user to enable access to specific features like their camera, media, and location and then retrieve or access the corresponding native features or data on the device.
 
-## Setting Up Expo to run and use the app
+## Setting Up Expo and app
 
-- To set up Expo and your development environment, you’ll need your terminal and Node.
-
-- To start Expo, you’ll need to install the Expo Command Line Interface (CLI) on your machine. To do so, open up your terminal and type in the following command:
-
-```
-npm install expo-cli --global
-```
-
-- Next, you’ll need the Expo app for your phone to run your project on. Search for the Expo app in the relevant app store for your device (iOS or Android). The app icon should look something like this:
-
-![Alt text](/assets/expo.png?raw=true 'ChatTime')
-
-- Now, you need an Expo account. Head over to the [Expo signup page](https://expo.io/) and follow the instructions to create an account. Once that’s done, you should be able to log in to Expo from your browser and mobile app. At some point, you’ll be asked to log in to the Expo CLI, so do that, too, when it comes up:
-
-- This is how the Expo app will look on your phone right after installation:
-
-![Alt text](/assets/screen.png?raw=true 'ChatTime')
-
-- After installing expo-cli and creating account clone or download the repository, open it with Visual Studio Code then open terminal and install all dependency.
-
-### Install Dependencies
-
+1. Node is required for installation
+#### Install Dependencies
 ```
 npm install
 ```
+### Expo Set Up
+2. Install the Expo Command Line Interface (CLI)
+```
+npm install expo-cli --global
+```
+3. Download the [Expo Go app](https://expo.dev/client) from the app store on your phone. The app icon should look something like this:
+<p align="center">
+<img alt="Expo App Icon" src="assets/expoIcon.PNG" height="200">
+</p>
 
-### Run
+4. Create an Expo account by heading over to the [Expo signup page](https://expo.io/) and follow the instructions to create an account. You should be able to log in to Expo from your browser and mobile app. Your expo app should look like this after logging in:
+<p align="center">
+<img alt="Expo App Icon" src="assets/expoScreenshot.PNG" height="300">
+</p>
 
-- You can run it on either way using the terminal
-
+## Run
+1. Start the app in your terminal by running:
 ```
 npm start
 ```
-
+Or
 ```
 expo start
 ```
 
-- And after running the app just scan the QR code to your Android or IOS make sure you install expo on your mobile devices to run it.
-- This is how the terminal will look like after running the app
+2. Your browser will open a new window starting the metro bundler. Switch the connection type to "tunnel"
+<p align="center">
+<img alt="Expo App Icon" src="assets/expoQR.PNG" height="300">
+</p> 
 
-![Alt text](/assets/terminal.png?raw=true 'ChatTime')
-
-- That's it happy coding!
+4. When the connection is ready, scan the QR code using the Expo Go app on your mobile device
+<p align="center">
+<img alt="Expo App Icon" src="assets/appStart.PNG" height="400">
+</p> 
 
 **Note! this is the easiest way to run and test expo application**
 
