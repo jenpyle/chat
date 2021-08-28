@@ -15,15 +15,15 @@ before joining the chat.
 and location data.
 - Data gets stored online and offline.
 
-## Technical
+## Technical Specs
 
-- React Native.
-- Developed using Expo.
-- Chat conversations stored in Google Firestore Database.
-- Users can pick and send images from the phone’s image library.
-- Users take pictures with the device’s camera app, and send it.
-- Images stored in Firebase Cloud Storage.
-- Read and send the user’s location data.
+- React Native
+- Developed using Expo
+- Chat conversations stored in Google Firestore Database
+- Users can pick and send images from the phone’s image library
+- Users take pictures with the device’s camera app, and send it
+- Images stored in Firebase Cloud Storage
+- Read and send the user’s location data
 
 ## Detailed Description
 The app was written in **[React Native](https://reactnative.dev/)**, a JavaScript framework for writing native applications for iOS and Android. A CLI tool, **[Expo](https://docs.expo.dev/)**, to set up and run the project. Testing on my computer was done using **[Android Studio](https://developer.android.com/studio)** as an Android emulator, and on my phone using the **[Expo Go app](https://expo.dev/client)**.
@@ -79,17 +79,8 @@ expo start
 <img alt="Expo App Icon" src="assets/expoQR.PNG" height="300">
 </p> 
 
-4. When the connection is ready, scan the QR code using the Expo Go app on your mobile device
+4. When the connection is ready, scan the QR code using the Expo Go app on your mobile device. The app should display the Start screen:
 <p align="center">
 <img alt="Expo App Icon" src="assets/appStart.PNG" height="400">
 </p> 
-
-**Note! this is the easiest way to run and test expo application**
-
-- If you want to explore some other way or test on your local machine you should download Android Studio for Android devices and XCode for IOS devices, make sure you have a lot of space on your local drive and a caveat with this is the complexity. Below are the link with detailed steps on installing it.
-
-- [Expo IOS Documentation](https://docs.expo.io/workflow/ios-simulator/)
-- [Expo Android Documentation](https://docs.expo.io/workflow/android-studio-emulator/)
-- Version: 1.0.0
-- License: MIT
-- Author: Rico John Dato-on
+That's it! Have fun chatting :blush:
